@@ -1,0 +1,35 @@
+from collections import deque
+from typing import Dict, Tuple, Hashable, Optional
+from .graph import unweightedGraph, Node
+
+def bfs_shortest_path(graph: unweightedGraph, start: Node, goal: Node) -> Tuple[Dict[Node, int], Dict[Node, Optional[Node]]]:
+    """
+    Find the shortest path in an unweighted graph using BFS.
+
+    :param graph: An unweighted graph represented as an adjacency list.
+    :param start: The starting node.
+    :param goal: The goal node.
+    :return: A tuple containing two dictionaries:
+             dist[node]   = number of edges from start to node
+             parent[node] = previous node on a shortest path from start  
+    """
+    if start not in graph:
+        raise ValueError (f"Start node {start!r} not in graph")
+    
+    distances: Dict[Node, int] = {start: 0}
+    parent: Dict[Node, Optional[Node]] = {start: None}
+    queue = deque([start])
+
+    while queue:
+        current = queue.popleft()
+
+        if current == goal:
+            break
+
+        for neighbor in graph.get(current, []):
+            if neighbor not in distances:
+                distances[neighbor] = distances[current] + 1
+                parent[neighbor] = current
+                queue.append(neighbor)
+
+    return distances, parent
