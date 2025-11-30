@@ -1,5 +1,5 @@
 import pytest
-from shorest_paths import dijkstra_shortest_path    
+from shortest_paths import dijkstra_shortest_path    
 
 def reconstruct_path(parent, goal):
     if goal not in parent:
@@ -11,7 +11,7 @@ def reconstruct_path(parent, goal):
         current = parent.get(current)
     return list(reversed(path)) 
 
-def test_dijkstra_small-weighted_graph():
+def test_dijkstra_small_weighted_graph():
     graph = {
         'A': [('B', 1), ('C', 1)],
         'B': [('D', 1)],
@@ -30,4 +30,4 @@ def test_dijkstra_small-weighted_graph():
         }
 
         with pytest.raises(ValueError):
-            dijstra_shortest_paths(graph, "A")
+            dijkstra_shortest_path(graph, "A")
